@@ -2,6 +2,7 @@ package com.example.gccoffee.repository;
 
 import com.example.gccoffee.model.Category;
 import com.example.gccoffee.model.Product;
+import com.example.gccoffee.repository.ProductRepository;
 import com.wix.mysql.EmbeddedMysql;
 import com.wix.mysql.ScriptResolver;
 import com.wix.mysql.config.Charset;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static com.wix.mysql.EmbeddedMysql.anEmbeddedMysql;
@@ -86,10 +89,10 @@ class ProductJdbcRepositoryTest {
     @Order(5)
     @DisplayName("상품을 수정할 수 있다.")
     void testUpdate(){
-        new Product.setProductName("updated-product");
+        newProduct.setProductName("updated-product");
         repository.update(newProduct);
 
-        var = repository.findById(newProduct.getProductId());
+        var product = repository.findById(newProduct.getProductId());
         assertThat(product.isEmpty(), is(false));
         assertThat(product.get(), samePropertyValuesAs(newProduct));
     }
@@ -102,6 +105,7 @@ class ProductJdbcRepositoryTest {
         var all = repository.findAll();
         assertThat(all.isEmpty(), is(true));
     }
+
 }
 
 

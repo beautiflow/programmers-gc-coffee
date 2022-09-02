@@ -25,7 +25,6 @@ public class DefaultProductService implements ProductService {
 
     @Override
     public List<Product> getAllProducts() {
-
         return productRepository.findAll();
     }
 
@@ -40,4 +39,5 @@ public class DefaultProductService implements ProductService {
         var product = new Product(UUID.randomUUID(), productName, price, description, LocalDateTime.now(), LocalDateTime.now());
         return productRepository.insert(product);
     }
+
 }

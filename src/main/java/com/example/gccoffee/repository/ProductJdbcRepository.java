@@ -21,7 +21,6 @@ public class ProductJdbcRepository implements ProductRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-
     @Override
     public List<Product> findAll() {
         return jdbcTemplate.query("select * from products", productRowMapper);
@@ -39,27 +38,27 @@ public class ProductJdbcRepository implements ProductRepository {
 
     @Override
     public Product update(Product product) {
-        return jdbcTemplate.update(
-                "UPDATE products SET product_name =: productName, category =: category, price = :price, description = :description, created_at = :created_At", updated_at = :updatedAt +
-                " 1WHERE product_id = UUID_TO_BIN(:productId)",
+        var update = jdbcTemplate.update(
+                "UPDATE products SET product_name = :productName, category = :category, price = :price, description = :description, created_at = :created_At, updated_at = :updatedAt" +
+                " WHERE product_id = UUID_TO_BIN(:productId)",
         toParamMap(product)
       );
-        if (update != 1){
+        if(update != 1) {
             throw new RuntimeException("Nothing was updated");
         }
+        return product;
     }
 
     @Override
-    public Optional<Product> findBy(UUID productId) {
+    public Optional<Product> findById(UUID productId) {
         try {
-            return Optional.of(
+            return Optional.ofNullable(
                     jdbcTemplate.queryForObject("SELECT * FROM products WHERE product_id = UUID_TO_BIN(:productId)",
                             Collections.singletonMap("productId", productId.toString()), productRowMapper)
             );
         } catch (EmptyResultDataAccessException e) {
            return Optional.empty();
         }
-
     }
 
     @Override

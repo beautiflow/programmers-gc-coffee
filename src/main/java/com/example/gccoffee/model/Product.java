@@ -24,6 +24,7 @@ public class Product {
     public Product(UUID productId, String productName, long price, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.productId = productId;
         this.productName = productName;
+        this.category = category;
         this.price = price;
         this.description = description;
         this.createdAt = createdAt;
@@ -77,5 +78,6 @@ public class Product {
         this.description = description;
         this.updatedAt = LocalDateTime.now();
     }
+
 }
 
